@@ -41,7 +41,7 @@ public class CancelamentoLoteDAO {
 			ResultSet rs;
 			rs = st.executeQuery("Select TOP 1 CANC.ID, CANC.NOME_CERTIFICADO, CANC.SENHA_CERTIFICADO, CANC.ARQUIVO_ENVIO, CANC.ARQUIVO_RETORNO, CANC.SITUACAO, CANC.MUNICIPIO " +
 								 "From TBL_CANC_LOTE AS CANC " +
-								 "Where CANC.SITUACAO = \'Aguardando Envio\' ORDER BY ID ASC");		
+								 "Where CANC.SITUACAO = \'Aguardando Envio\' AND CANC.MUNICIPIO IS NOT NULL AND CANC.ARQUIVO_ENVIO IS NOT NULL ORDER BY ID ASC");		
 		
 			return rs;
 	

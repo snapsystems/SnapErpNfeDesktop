@@ -38,11 +38,12 @@ public class EnvioLoteDAO {
 		try{
 			Connection con = ConnectionFactory.getConnection();
 
-			PreparedStatement stmt = con.prepareStatement("UPDATE TBL_ENVIO_LOTE SET SITUACAO = ?, PROTOCOLO = ?, ARQUIVO_RETORNO = ? WHERE ID = ?");
-			stmt.setString(1, "Lote Processado"); // Aguardando Retorno
-			stmt.setString(2, "PROTOCOLO");
+			PreparedStatement stmt = con.prepareStatement("UPDATE TBL_ENVIO_LOTE SET SITUACAO = ?, PROTOCOLO = ?, ARQUIVO_RETORNO = ?, ARQUIVO_RETORNO_CONSULTA_LOTE = ? WHERE ID = ?");
+			stmt.setString(1, envioLote.getSituacao());
+			stmt.setString(2, envioLote.getProtocolo());
 			stmt.setString(3, envioLote.getArquivoRetorno());
-			stmt.setInt(4, envioLote.getId());
+			stmt.setString(4, envioLote.getArquivoRetornoConsultaLote());
+			stmt.setInt(5, envioLote.getId());
 
 			stmt.executeUpdate();
 			
@@ -54,15 +55,37 @@ public class EnvioLoteDAO {
 		}
 	}
 
-	public ResultSet getEnvioLote(){
+	public ResultSet getEnvioLote(EnvioLote envioLote){
 		try{
 		Connection con = ConnectionFactory.getConnection();
 		
 		Statement st = con.createStatement();
 		ResultSet rs;
-		rs = st.executeQuery("Select TOP 1 LOTE.ID, LOTE.NOME_CERTIFICADO, LOTE.SENHA_CERTIFICADO, LOTE.ARQUIVO_ENVIO, LOTE.ARQUIVO_RETORNO, LOTE.SITUACAO, LOTE.MUNICIPIO " +
+		rs = st.executeQuery("Select TOP 1 LOTE.ID, LOTE.NOME_CERTIFICADO, LOTE.SENHA_CERTIFICADO, LOTE.ARQUIVO_ENVIO, LOTE.ARQUIVO_RETORNO, LOTE.SITUACAO, LOTE.MUNICIPIO, LOTE.ESTADO, LOTE.PROTOCOLO, LOTE.CNPJ " +
 							 "From TBL_ENVIO_LOTE AS LOTE " +
-							 "Where LOTE.SITUACAO = \'Aguardando Envio\' ORDER BY ID ASC");		
+							 "Where LOTE.SITUACAO = \'" + envioLote.getSituacao() + "\' AND LOTE.MUNICIPIO IS NOT NULL AND LOTE.ARQUIVO_ENVIO IS NOT NULL ORDER BY ID ASC");		
+	
+		return rs;
+	
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ResultSet getEnvioLoteMercadoria(EnvioLote envioLote){
+		try{
+		Connection con = ConnectionFactory.getConnection();
+		
+		Statement st = con.createStatement();
+		ResultSet rs;
+		rs = st.executeQuery("Select TOP 1 LOTE.ID, LOTE.NOME_CERTIFICADO, LOTE.SENHA_CERTIFICADO, LOTE.ARQUIVO_ENVIO, LOTE.ARQUIVO_RETORNO, LOTE.ARQUIVO_RETORNO_CONSULTA_LOTE, LOTE.SITUACAO, LOTE.MUNICIPIO, LOTE.ESTADO, LOTE.PROTOCOLO " +
+							 "From TBL_ENVIO_LOTE AS LOTE " +
+							 "Where LOTE.SITUACAO = \'" + envioLote.getSituacao() + "\' AND LOTE.MUNICIPIO IS NULL ORDER BY ID ASC");		
 	
 		return rs;
 	

@@ -60,7 +60,7 @@ public class Executar {
         			System.out.println("#### " + retorno);
         			
         			return proxy.consultarLoteRpsV3("<ns2:cabecalho versao=\"3\" xmlns:ns2=\"http://www.ginfes.com.br/cabecalho_v03.xsd\"><versaoDados>3</versaoDados></ns2:cabecalho>", retorno);
-        		}else if(metodo == Constantes.METODO_CANCELAR_NFSE){
+        		}else if(metodo == Constantes.METODO_CANCELAR_RPS){
         			String retorno = assinador.assinarDocumento(path, arquivo, chavePrivada, chavePublica);
         			
         			ServiceGinfesImplProxy proxy = new ServiceGinfesImplProxy();
@@ -117,7 +117,7 @@ public class Executar {
         			
   //      			return response.getRetornoXML();
         			return "";
-        		}else if(metodo == Constantes.METODO_CANCELAR_NFSE){
+        		}else if(metodo == Constantes.METODO_CANCELAR_RPS){
         			String retorno = assinador.assinarDocumento(path, arquivo, chavePrivada, chavePublica);
         			
         			CancelamentoNFeRequest request = new CancelamentoNFeRequest();
