@@ -48,15 +48,6 @@ public class PrincipalNFe {
 	public static void main(String[] args) throws Exception {
 		Principal principal = new Principal();
 		
-		/*
-			public static final int METODO_ENVIAR_LOTE_RPS = 1;
-			public static final int METODO_CONSULTAR_LOTE_RPS = 2;
-			public static final int METODO_CANCELAR_RPS = 3;
-			public static final int METODO_ENVIAR_LOTE_NFE = 4;
-			public static final int METODO_CONSULTAR_LOTE_NFE = 5;
-			public static final int METODO_CANCELAR_NFE = 6;
-		 */
-		
 		int metodo = Constantes.METODO_ENVIAR_LOTE_RPS;
 		
 		while(true){
